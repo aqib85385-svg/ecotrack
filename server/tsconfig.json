@@ -9,5 +9,5 @@
     "outDir": "../dist",
     "rootDir": ".."
   },
-  "include": ["**/*.ts", "../shared/**/*.ts"]
+  "include": ["**/*.ts", "../shared/**/*.ts", "../tests/**/*.ts"]
 }
