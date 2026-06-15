@@ -146,10 +146,31 @@
       "totalEmissions": 89.4,
       "carbonScore": 91,
       "classification": "Low"
+    },
+    {
+      "id": "calc-1781552160226",
+      "timestamp": "2026-06-15T19:36:00.226Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 10,
+        "dietType": "vegan",
+        "electricityUsage": 120,
+        "electricityType": "green",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 12,
+      "foodEmissions": 45,
+      "energyEmissions": 2.4,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 89.4,
+      "carbonScore": 91,
+      "classification": "Low"
     }
   ],
   "userStats": {
-    "points": 335,
+    "points": 350,
     "streak": 5,
     "completedChallenges": [
       "chal-1",
@@ -160,7 +181,7 @@
       "Green Starter",
       "Eco Hero"
     ],
-    "lastActive": "2026-06-15T19:19:17.878Z"
+    "lastActive": "2026-06-15T19:36:00.258Z"
   },
   "challenges": [
     {
@@ -239,6 +260,17 @@
       "userId": "judge-user",
       "metadata": {
         "calculationId": "calc-1781551157853",
+        "totalEmissions": 89.4,
+        "score": 91
+      }
+    },
+    {
+      "id": "audit-1781552160262-u4p26k4",
+      "eventType": "CALCULATION_CREATED",
+      "timestamp": "2026-06-15T19:36:00.262Z",
+      "userId": "judge-user",
+      "metadata": {
+        "calculationId": "calc-1781552160226",
         "totalEmissions": 89.4,
         "score": 91
       }

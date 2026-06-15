@@ -188,9 +188,7 @@ export const dbService = {
       
       // Student profile: Low starting emissions, consistently minor reductions (4-5% reduction over time)
       const baseTransport = 60; // public transit & walk
-      const baseFood = 51; // vegetarian
       const baseEnergy = 40; // grid 100 kWh
-      const baseLifestyle = 30; // low consumer
       
       for (let i = months - 1; i >= 0; i--) {
         const date = new Date(now.getFullYear(), now.getMonth() - i, 15);
@@ -224,8 +222,6 @@ export const dbService = {
       unlockedAchievements = ['Green Starter'];
       
       // Professional: High emissions (driving car daily), fluctuating trend (up then slightly down)
-      const baseTransport = 216; // petrol car, 40 km/day
-      const baseFood = 75; // average meat
       const baseEnergy = 120; // 300 kWh grid
       const baseLifestyle = 80; // moderate consumer
 

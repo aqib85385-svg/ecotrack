@@ -23,7 +23,7 @@ export const scenarioController = {
       let monthlyCo2ReductionGoal = 0;
       let monthlySavingsGoal = 0;
       let targetDateStr = '';
-      let timeRequired = '3 Months';
+      const timeRequired = '3 Months';
 
       const now = new Date();
       const targetDate = new Date(now.getFullYear(), now.getMonth() + 3, 15);

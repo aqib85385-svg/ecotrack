@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateFootprint, EMISSION_FACTORS } from '../shared/formulas.js';
+import { calculateFootprint } from '../shared/formulas.js';
 import { CalculationInput } from '../shared/types.js';
 
 describe('Carbon Footprint Formulas', () => {

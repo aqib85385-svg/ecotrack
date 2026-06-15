@@ -1,4 +1,4 @@
-import { Recommendation, CalculationResult, UserPersona } from '../../shared/types.js';
+import { Recommendation, CalculationResult } from '../../shared/types.js';
 
 export const priorityEngine = {
   // Score and enrich a list of base recommendations based on user calculations and risk
@@ -46,7 +46,7 @@ export const priorityEngine = {
 
       // 2. Calculate ROI Score (1-10)
       // ROI = savings (INR) / cost. We scale this relative to cost.
-      let roiScore = 5;
+      let roiScore: number;
       if (action.costScore === 0) {
         roiScore = 10; // free with savings is infinite ROI
       } else {
