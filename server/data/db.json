@@ -1,0 +1,248 @@
+{
+  "calculations": [
+    {
+      "id": "calc-student-5",
+      "timestamp": "2026-01-14T18:30:00.000Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 12,
+        "dietType": "vegetarian",
+        "electricityUsage": 110,
+        "electricityType": "grid",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 60,
+      "foodEmissions": 51,
+      "energyEmissions": 40,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 181,
+      "carbonScore": 80,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-student-4",
+      "timestamp": "2026-02-14T18:30:00.000Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 10.5,
+        "dietType": "vegetarian",
+        "electricityUsage": 105,
+        "electricityType": "grid",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 58.2,
+      "foodEmissions": 51,
+      "energyEmissions": 38.8,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 178,
+      "carbonScore": 83,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-student-3",
+      "timestamp": "2026-03-14T18:30:00.000Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 9,
+        "dietType": "vegetarian",
+        "electricityUsage": 100,
+        "electricityType": "grid",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 56.4,
+      "foodEmissions": 51,
+      "energyEmissions": 37.6,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 175,
+      "carbonScore": 85,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-student-2",
+      "timestamp": "2026-04-14T18:30:00.000Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 7.5,
+        "dietType": "vegan",
+        "electricityUsage": 95,
+        "electricityType": "grid",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 54.6,
+      "foodEmissions": 45,
+      "energyEmissions": 36.4,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 166,
+      "carbonScore": 88,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-student-1",
+      "timestamp": "2026-05-14T18:30:00.000Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 6,
+        "dietType": "vegan",
+        "electricityUsage": 90,
+        "electricityType": "grid",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 52.8,
+      "foodEmissions": 45,
+      "energyEmissions": 35.2,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 163,
+      "carbonScore": 90,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-student-0",
+      "timestamp": "2026-06-14T18:30:00.000Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 4.5,
+        "dietType": "vegan",
+        "electricityUsage": 85,
+        "electricityType": "grid",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 51,
+      "foodEmissions": 45,
+      "energyEmissions": 34,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 160,
+      "carbonScore": 93,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-1781551157853",
+      "timestamp": "2026-06-15T19:19:17.853Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 10,
+        "dietType": "vegan",
+        "electricityUsage": 120,
+        "electricityType": "green",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 12,
+      "foodEmissions": 45,
+      "energyEmissions": 2.4,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 89.4,
+      "carbonScore": 91,
+      "classification": "Low"
+    }
+  ],
+  "userStats": {
+    "points": 335,
+    "streak": 5,
+    "completedChallenges": [
+      "chal-1",
+      "chal-2",
+      "chal-3"
+    ],
+    "unlockedAchievements": [
+      "Green Starter",
+      "Eco Hero"
+    ],
+    "lastActive": "2026-06-15T19:19:17.878Z"
+  },
+  "challenges": [
+    {
+      "id": "chal-1",
+      "title": "Carpool Champion",
+      "description": "Walk, cycle, or share a ride for all travels today.",
+      "points": 50,
+      "category": "Transportation",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "chal-2",
+      "title": "Green Chef",
+      "description": "Prepare 100% vegetarian meals for the entire day.",
+      "points": 50,
+      "category": "Food",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "chal-3",
+      "title": "Phantom Plug Patrol",
+      "description": "Unplug 5 unused appliances or electronics before sleeping.",
+      "points": 50,
+      "category": "Energy",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "chal-4",
+      "title": "Minimalist Monday",
+      "description": "Avoid buying any non-essential goods for 24 hours.",
+      "points": 50,
+      "category": "Lifestyle",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "chal-5",
+      "title": "Transit Pioneer",
+      "description": "Use public transit (bus/metro) for your daily commute this week.",
+      "points": 100,
+      "category": "Transportation",
+      "difficulty": "Medium"
+    },
+    {
+      "id": "chal-6",
+      "title": "Zero Waste Hero",
+      "description": "Compost all organic waste and use zero single-use plastics today.",
+      "points": 100,
+      "category": "Lifestyle",
+      "difficulty": "Medium"
+    }
+  ],
+  "audits": [
+    {
+      "id": "audit-seed-1781550806829",
+      "eventType": "DB_SEED",
+      "timestamp": "2026-06-15T19:13:26.829Z",
+      "userId": "judge-user",
+      "metadata": {
+        "seededPersona": "Student",
+        "recordsCreated": 6
+      }
+    },
+    {
+      "id": "audit-1781550806833-f8f4gp8",
+      "eventType": "DB_DEMO_SEED",
+      "timestamp": "2026-06-15T19:13:26.833Z",
+      "userId": "judge-user",
+      "metadata": {
+        "seededPersona": "Student"
+      }
+    },
+    {
+      "id": "audit-1781551157882-54nlt46",
+      "eventType": "CALCULATION_CREATED",
+      "timestamp": "2026-06-15T19:19:17.882Z",
+      "userId": "judge-user",
+      "metadata": {
+        "calculationId": "calc-1781551157853",
+        "totalEmissions": 89.4,
+        "score": 91
+      }
+    }
+  ],
+  "weeklyReports": []
+}
