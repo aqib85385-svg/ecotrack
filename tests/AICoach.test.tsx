@@ -20,7 +20,7 @@ describe('AICoach Component', () => {
 
   it('renders loading states correctly when recommendations fetch is in progress', () => {
     vi.mocked(api.getRecommendations).mockReturnValue(new Promise(() => {}));
-    vi.mocked(api.getReports).mockResolvedValue([]);
+    vi.mocked(api.getReports).mockReturnValue(new Promise(() => {}));
 
     render(<AICoach />);
 

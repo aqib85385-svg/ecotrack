@@ -1,6 +1,8 @@
 import { describe, it, expect, afterAll } from 'vitest';
 import request from 'supertest';
 import { app, server } from '../server/server.js';
+import { dbService } from '../server/services/dbService.js';
+
 
 describe('Express REST API Endpoints Integration', () => {
   // Close the server listener after tests complete to avoid blocking node process
@@ -124,5 +126,79 @@ describe('Express REST API Endpoints Integration', () => {
     expect(historyRes.body.history.length).toBeGreaterThan(0);
     expect(historyRes.body.history[historyRes.body.history.length - 1].persona).toBe('Professional');
   });
+
+  // AI Coach and Audit logs integration tests
+  it('GET /api/coach/recommendations returns 400 when calculation history is empty', async () => {
+    const db = await dbService.getDb();
+    const originalCalcs = db.calculations;
+    db.calculations = [];
+    await dbService.saveDb(db);
+
+    try {
+      const res = await request(app).get('/api/coach/recommendations');
+      expect(res.status).toBe(400);
+      expect(res.body.error).toContain(' footprint calculation first');
+    } finally {
+      db.calculations = originalCalcs;
+      await dbService.saveDb(db);
+    }
+  });
+
+  it('POST /api/coach/report returns 400 when calculation history is empty', async () => {
+    const db = await dbService.getDb();
+    const originalCalcs = db.calculations;
+    db.calculations = [];
+    await dbService.saveDb(db);
+
+    try {
+      const res = await request(app).post('/api/coach/report');
+      expect(res.status).toBe(400);
+      expect(res.body.error).toContain('Calculations are required');
+    } finally {
+      db.calculations = originalCalcs;
+      await dbService.saveDb(db);
+    }
+  });
+
+  it('GET /api/coach/recommendations returns 200 with recommendations list', async () => {
+    const res = await request(app).get('/api/coach/recommendations');
+    expect(res.status).toBe(200);
+    expect(res.body).toBeInstanceOf(Array);
+    expect(res.body.length).toBeGreaterThan(0);
+    expect(res.body[0].action).toBeDefined();
+    expect(res.body[0].category).toBeDefined();
+  });
+
+  it('POST /api/coach/report returns 200 with generated report', async () => {
+    const res = await request(app).post('/api/coach/report');
+    expect(res.status).toBe(200);
+    expect(res.body.sustainabilityScore).toBeDefined();
+    expect(res.body.trends).toBeDefined();
+    expect(res.body.formattedReport).toBeDefined();
+  });
+
+  it('GET /api/coach/report/history returns 200 with report history list', async () => {
+    const res = await request(app).get('/api/coach/report/history');
+    expect(res.status).toBe(200);
+    expect(res.body).toBeInstanceOf(Array);
+    expect(res.body.length).toBeGreaterThan(0);
+  });
+
+  it('GET /api/audit/logs returns 200 with audit logs list in reverse chronological order', async () => {
+    const res = await request(app).get('/api/audit/logs');
+    expect(res.status).toBe(200);
+    expect(res.body).toBeInstanceOf(Array);
+    expect(res.body.length).toBeGreaterThan(0);
+    expect(res.body[0].eventType).toBeDefined();
+    expect(res.body[0].timestamp).toBeDefined();
+    
+    // Check descending order of timestamp
+    if (res.body.length >= 2) {
+      const firstTime = new Date(res.body[0].timestamp).getTime();
+      const secondTime = new Date(res.body[1].timestamp).getTime();
+      expect(firstTime).toBeGreaterThanOrEqual(secondTime);
+    }
+  });
 });
+
 
