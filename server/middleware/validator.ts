@@ -53,5 +53,43 @@ export const validator = {
     }
 
     next();
+  },
+
+  validateSimulationInput(req: Request, res: Response, next: NextFunction) {
+    const { switchTransit, reduceElectricityPct, newDietType, newShoppingHabits } = req.body;
+
+    if (switchTransit !== undefined && typeof switchTransit !== 'boolean') {
+      return res.status(400).json({ error: 'switchTransit must be a boolean.' });
+    }
+
+    if (reduceElectricityPct !== undefined) {
+      if (typeof reduceElectricityPct !== 'number' || reduceElectricityPct < 0 || reduceElectricityPct > 100) {
+        return res.status(400).json({ error: 'reduceElectricityPct must be a number between 0 and 100.' });
+      }
+    }
+
+    if (newDietType !== undefined && newDietType !== '') {
+      const validDiets = ['omnivore', 'average_meat', 'pescatarian', 'vegetarian', 'vegan'];
+      if (!validDiets.includes(newDietType)) {
+        return res.status(400).json({ error: `Invalid dietType: ${newDietType}` });
+      }
+    }
+
+    if (newShoppingHabits !== undefined && newShoppingHabits !== '') {
+      const validShopping = ['high', 'moderate', 'low'];
+      if (!validShopping.includes(newShoppingHabits)) {
+        return res.status(400).json({ error: `Invalid shoppingHabits: ${newShoppingHabits}` });
+      }
+    }
+
+    next();
+  },
+
+  validateChallengeParam(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    if (!id || typeof id !== 'string' || !/^[a-zA-Z0-9-]+$/.test(id)) {
+      return res.status(400).json({ error: 'Invalid challenge ID parameter format. Must be alphanumeric and hyphens only.' });
+    }
+    next();
   }
 };

@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
@@ -21,5 +22,20 @@ export default defineConfig({
   build: {
     outDir: 'dist/client',
     emptyOutDir: true
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      include: ['server/**/*.ts', 'shared/**/*.ts'],
+      thresholds: {
+        statements: 40,
+        branches: 40,
+        functions: 40,
+        lines: 40
+      }
+    }
   }
 });

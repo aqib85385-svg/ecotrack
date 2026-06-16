@@ -167,10 +167,115 @@
       "totalEmissions": 89.4,
       "carbonScore": 91,
       "classification": "Low"
+    },
+    {
+      "id": "calc-1781552690269",
+      "timestamp": "2026-06-15T19:44:50.269Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 10,
+        "dietType": "vegan",
+        "electricityUsage": 120,
+        "electricityType": "green",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 12,
+      "foodEmissions": 45,
+      "energyEmissions": 2.4,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 89.4,
+      "carbonScore": 91,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-1781552927593",
+      "timestamp": "2026-06-15T19:48:47.593Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 10,
+        "dietType": "vegan",
+        "electricityUsage": 120,
+        "electricityType": "green",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 12,
+      "foodEmissions": 45,
+      "energyEmissions": 2.4,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 89.4,
+      "carbonScore": 91,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-1781606108932",
+      "timestamp": "2026-06-16T10:35:08.932Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 10,
+        "dietType": "vegan",
+        "electricityUsage": 120,
+        "electricityType": "green",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 12,
+      "foodEmissions": 45,
+      "energyEmissions": 2.4,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 89.4,
+      "carbonScore": 91,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-1781606122816",
+      "timestamp": "2026-06-16T10:35:22.816Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 10,
+        "dietType": "vegan",
+        "electricityUsage": 120,
+        "electricityType": "green",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 12,
+      "foodEmissions": 45,
+      "energyEmissions": 2.4,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 89.4,
+      "carbonScore": 91,
+      "classification": "Low"
+    },
+    {
+      "id": "calc-1781609654482",
+      "timestamp": "2026-06-16T11:34:14.482Z",
+      "persona": "Student",
+      "inputs": {
+        "persona": "Student",
+        "transportMethod": "public_transit",
+        "dailyDistance": 10,
+        "dietType": "vegan",
+        "electricityUsage": 120,
+        "electricityType": "green",
+        "shoppingHabits": "low"
+      },
+      "transportEmissions": 12,
+      "foodEmissions": 45,
+      "energyEmissions": 2.4,
+      "lifestyleEmissions": 30,
+      "totalEmissions": 89.4,
+      "carbonScore": 91,
+      "classification": "Low"
     }
   ],
   "userStats": {
-    "points": 350,
+    "points": 425,
     "streak": 5,
     "completedChallenges": [
       "chal-1",
@@ -181,7 +286,7 @@
       "Green Starter",
       "Eco Hero"
     ],
-    "lastActive": "2026-06-15T19:36:00.258Z"
+    "lastActive": "2026-06-16T11:34:14.485Z"
   },
   "challenges": [
     {
@@ -271,6 +376,61 @@
       "userId": "judge-user",
       "metadata": {
         "calculationId": "calc-1781552160226",
+        "totalEmissions": 89.4,
+        "score": 91
+      }
+    },
+    {
+      "id": "audit-1781552690306-m1u7l1r",
+      "eventType": "CALCULATION_CREATED",
+      "timestamp": "2026-06-15T19:44:50.306Z",
+      "userId": "judge-user",
+      "metadata": {
+        "calculationId": "calc-1781552690269",
+        "totalEmissions": 89.4,
+        "score": 91
+      }
+    },
+    {
+      "id": "audit-1781552927616-p02w2k7",
+      "eventType": "CALCULATION_CREATED",
+      "timestamp": "2026-06-15T19:48:47.616Z",
+      "userId": "judge-user",
+      "metadata": {
+        "calculationId": "calc-1781552927593",
+        "totalEmissions": 89.4,
+        "score": 91
+      }
+    },
+    {
+      "id": "audit-1781606108953-v94a4dq",
+      "eventType": "CALCULATION_CREATED",
+      "timestamp": "2026-06-16T10:35:08.953Z",
+      "userId": "judge-user",
+      "metadata": {
+        "calculationId": "calc-1781606108932",
+        "totalEmissions": 89.4,
+        "score": 91
+      }
+    },
+    {
+      "id": "audit-1781606122851-g27f46y",
+      "eventType": "CALCULATION_CREATED",
+      "timestamp": "2026-06-16T10:35:22.851Z",
+      "userId": "judge-user",
+      "metadata": {
+        "calculationId": "calc-1781606122816",
+        "totalEmissions": 89.4,
+        "score": 91
+      }
+    },
+    {
+      "id": "audit-1781609654499-4cp4lz8",
+      "eventType": "CALCULATION_CREATED",
+      "timestamp": "2026-06-16T11:34:14.499Z",
+      "userId": "judge-user",
+      "metadata": {
+        "calculationId": "calc-1781609654482",
         "totalEmissions": 89.4,
         "score": 91
       }

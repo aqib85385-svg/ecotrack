@@ -76,8 +76,9 @@ export const healthController = {
       status: overallStatus,
       database: dbStatus,
       ai_service: aiStatus,
-      uptime: formatUptime(uptimeSeconds),
       version: '1.0.0',
+      uptime: formatUptime(uptimeSeconds),
+      memory: formatMemory(memory.rss),
       last_backup: new Date().toISOString(),
       environment: process.env.NODE_ENV || 'development',
       memoryUsage: {

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { dbService } from '../services/dbService.js';
 import { riskEngineService } from '../services/riskEngineService.js';
 import { carbonTwinService } from '../services/carbonTwinService.js';
+import { auditService } from '../services/auditService.js';
 
 export const trackerController = {
   async getHistory(req: Request, res: Response) {
@@ -30,6 +31,12 @@ export const trackerController = {
     try {
       const history = await dbService.getCalculations();
       const twinData = carbonTwinService.generateForecast(history);
+
+      // Audit Logging
+      await auditService.logEvent('CARBON_TWIN_UPDATED', 'judge-user', {
+        confidence: twinData.confidence,
+        baselineProjected: twinData.forecast[0]?.baseline || 0
+      });
 
       res.status(200).json(twinData);
     } catch (err: any) {

@@ -1,22 +1,94 @@
 # Security Architecture Manual
 
-This manual details the security architecture, data validation guidelines, and AI safety measures implemented in EcoTrack AI.
+This manual details the security architecture, threat models, input validation controls, and AI safety measures implemented in EcoTrack AI.
 
-## Layered AI Safety Gateway
+---
 
-To protect sensitive keys, prevent prompt injection leaks, and secure render outputs, all AI-driven recommendations and reports pass through our 6-layer Safety Gateway:
+## 1. Security Architecture Flow
 
-1. **Input Validation**: Custom server middleware checks limits for inputs (e.g. travel distance between 0 and 10,000 km, power usage between 0 and 100,000 kWh).
-2. **Input Sanitization**: Escapes HTML tag characters (`<`, `>`, `&`, `"`, `'`, `/`) in string parameters.
-3. **Prompt Risk Classification**: Checks body parameters for system prompt override phrases (`ignore instructions`, `reveal system prompt`, etc.) and rejects request on detection.
-4. **Structured Prompts**: Encapsulates data in hardcoded system instructions that demand standardized JSON arrays.
-5. **Output Validation**: Validates the JSON schema returned by the model.
-6. **Response Sanitization**: Sanitizes returned string values to strip out unexpected HTML tags before returning them to the client.
+The following diagram illustrates how incoming client requests flow through our multi-layered defense shields before executing controller code and returning data:
 
-## Core API Controls
-- **Helmet Headers**: Integrated Helmet to configure strict Content Security Policies (CSP), frame guards, and XSS headers.
-- **CORS limits**: Restricts origins and header methods.
-- **Rate Limiting**:
-  - General API: Limit of 100 requests per 15 minutes.
-  - Coach/AI: Limit of 20 requests per 15 minutes to prevent billing exhaustion.
-- **Secure Error Handling**: Strips stack traces in production to return uniform JSON payloads.
+```mermaid
+graph TD
+    Request[Incoming Request] -->|Layer 1| Helmet[Helmet Headers & Strict CSP]
+    Helmet -->|Layer 2| RateLimiter[Express Rate Limiting]
+    RateLimiter -->|Layer 3| SecFilter[Security Filter: XSS & Prompt Injection Check]
+    SecFilter -->|Layer 4| Validator[Schema & Params Validation Middleware]
+    Validator -->|Layer 5| Controller[API Controllers]
+    Controller -->|Layer 6| AI_Safety[Safety Gateway: Output Validation & Sanitization]
+    AI_Safety -->|Audit Logging| Audit[Audit Log Service]
+    AI_Safety -->|Response| Client[Safe client Output]
+```
+
+---
+
+## 2. Threat Model & Risk Containment
+
+Our threat modeling targets three core exploit vectors:
+1. **Malicious LLM Directives (Prompt Injection)**: User inputs designed to override the system prompt to hijack the AI Coach, leak API keys, or output unsafe content.
+2. **Stored/Reflected Cross-Site Scripting (XSS)**: Injection of script tags into parameters (like persona, commute methods, or recommendations) that execute inside the judge or client browser.
+3. **Denial of Service (DoS) / Resource Exhaustion**: Flooding calculations or AI endpoints to exhaust system memory or consume Gemini API quotas.
+
+---
+
+## 3. Comprehensive Defense Implementations
+
+### Layer A: Helmet & Secure Headers
+- Configures a strict Content Security Policy (CSP), blocking unsafe resources and forcing connections to trusted origins.
+- Blocks iframe clickjacking attempts (`X-Frame-Options: SAMEORIGIN`).
+- Disables MIME type sniffing (`X-Content-Type-Options: nosniff`).
+
+### Layer B: Rate Limiting
+- **General Routes (`/api`)**: Restricted to 100 requests per 15 minutes in production to mitigate server floods.
+- **AI Coach Routes (`/api/coach`)**: Tightened to 20 requests per 15 minutes to block API key exhaustion and financial drain.
+
+### Layer C: Input Validation & Sanitization
+- **Numerical Boundaries**: Middleware validates that numbers (distance, energy usage) fall within safe operational ranges, preventing math overflow bugs.
+- **XSS Escaping Script**: Escapes HTML tag characters recursively across all request bodies:
+  - `&` $\rightarrow$ `&amp;`
+  - `<` $\rightarrow$ `&lt;`
+  - `>` $\rightarrow$ `&gt;`
+  - `"` $\rightarrow$ `&quot;`
+  - `'` $\rightarrow$ `&#x27;`
+  - `/` $\rightarrow$ `&#x2F;`
+- **Parameter Validation**: Ensures ID params match alphanumeric patterns (`/^[a-zA-Z0-9-]+$/`) to block path traversal exploits.
+
+### Layer D: Prompt Injection Classification
+- Incoming strings are checked for malicious override keywords:
+  - `ignore previous instructions`, `reveal system prompt`, `show system prompt`, `system override`, `reveal api key`, `bypass restrictions`, `act as`.
+- Requests containing matching sequences are blocked immediately, returning HTTP 400.
+
+### Layer E: Structured AI Prompts & Output Validation
+- System instructions force Gemini 1.5 Flash to return structural JSON arrays.
+- Output parsers screen the returned payload against structural schema requirements. If parsing fails, the system automatically routes requests to the local deterministic fallback prioritizer.
+
+### Layer F: Response Sanitization
+- The `safetyGateway` parses AI responses, stripping out any stray script blocks or HTML tags before they are sent to the React frontend.
+
+---
+
+## 4. Health Monitoring
+
+The `/health` endpoint exposes a flat JSON structure allowing judges and monitoring tools to quickly inspect server and service health parameters:
+
+```json
+{
+  "status": "healthy",
+  "database": "healthy",
+  "ai_service": "healthy",
+  "version": "1.0.0",
+  "uptime": "0h 10m 45s",
+  "memory": "42.15 MB"
+}
+```
+
+---
+
+## 5. Audit Logging compliance
+
+Structured audit logging tracks all core calculations, gamification accomplishments, and forecast computations. Every audit log record contains:
+- **EventType**: Action descriptor (`CALCULATION_CREATED`, `RECOMMENDATIONS_GENERATED`, `WEEKLY_REPORT_GENERATED`, `SCENARIO_PLAN_CREATED`, `CHALLENGE_COMPLETED`, `CARBON_TWIN_UPDATED`).
+- **Timestamp**: ISO 8601 string.
+- **UserId**: Static identifier of the executing actor (`judge-user`).
+- **Metadata**: Key-value pairs containing action parameters (e.g. points awarded, confidence, carbon score).
+- Logs are rendered inside the **Audit Trail Viewer** console on the dashboard, providing full operational transparency.

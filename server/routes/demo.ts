@@ -2,10 +2,11 @@ import { Router } from 'express';
 import { dbService } from '../services/dbService.js';
 import { auditService } from '../services/auditService.js';
 import { UserPersona } from '../../shared/types.js';
+import { securityFilter } from '../middleware/securityFilter.js';
 
 const router = Router();
 
-router.post('/seed', async (req, res) => {
+router.post('/seed', securityFilter, async (req, res) => {
   try {
     const { persona } = req.body;
     const validPersonas: UserPersona[] = ['Student', 'Professional', 'Family Household', 'Remote Worker', 'Eco-Conscious User'];

@@ -2,32 +2,32 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: 'npm'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Run ESLint checks
-      run: npm run lint
+      - name: Run ESLint
+        run: npm run lint
 
-    - name: Run tests with coverage assertions
-      run: npm run test:coverage
+      - name: Run Vitest with coverage
+        run: npm run test:coverage
 
-    - name: Build frontend & backend
-      run: npm run build
+      - name: Compile production builds
+        run: npm run build

@@ -68,6 +68,7 @@ class TaskQueue {
   }
 }
 
+let cachedDb: DatabaseSchema | null = null;
 const dbQueue = new TaskQueue();
 
 export const dbService = {
@@ -75,18 +76,22 @@ export const dbService = {
   async getDb(): Promise<DatabaseSchema> {
     return dbQueue.enqueue(async () => {
       try {
+        if (cachedDb) {
+          return cachedDb;
+        }
         if (!fs.existsSync(DB_PATH)) {
           throw new Error(`Database file not found at ${DB_PATH}`);
         }
         const data = await fs.promises.readFile(DB_PATH, 'utf-8');
         const parsed = JSON.parse(data) || {};
-        return {
+        cachedDb = {
           calculations: parsed.calculations || [],
           userStats: parsed.userStats || { points: 0, streak: 0, completedChallenges: [], unlockedAchievements: [], lastActive: '' },
           challenges: parsed.challenges || [],
           audits: parsed.audits || [],
           weeklyReports: parsed.weeklyReports || []
         };
+        return cachedDb;
       } catch (err) {
         console.error('Error reading database file, returning default structure', err);
         return { calculations: [], userStats: { points: 0, streak: 0, completedChallenges: [], unlockedAchievements: [], lastActive: '' }, challenges: [], audits: [], weeklyReports: [] };
@@ -97,6 +102,7 @@ export const dbService = {
   // Save database state
   async saveDb(db: DatabaseSchema): Promise<void> {
     return dbQueue.enqueue(async () => {
+      cachedDb = db;
       const dir = path.dirname(DB_PATH);
       if (!fs.existsSync(dir)) {
         await fs.promises.mkdir(dir, { recursive: true });

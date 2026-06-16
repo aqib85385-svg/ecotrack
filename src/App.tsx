@@ -1,17 +1,19 @@
 import React from 'react';
 import { Layout } from './components/Layout.jsx';
-import { CarbonCalculator } from './components/CarbonCalculator.jsx';
-import { AICoach } from './components/AICoach.jsx';
-import { CarbonTwin } from './components/CarbonTwin.jsx';
-import { ImpactSimulator } from './components/ImpactSimulator.jsx';
-import { ProgressTracker } from './components/ProgressTracker.jsx';
-import { EcoChallenges } from './components/EcoChallenges.jsx';
-import { CommunityBenchmarking } from './components/CommunityBenchmarking.jsx';
-import { ScenarioPlanner } from './components/ScenarioPlanner.jsx';
-import { AuditLogViewer } from './components/AuditLogViewer.jsx';
 import { ErrorBoundary } from './components/UI/ErrorBoundary.jsx';
 import { api } from './services/api.js';
 import type { UserStats, UserPersona } from '../shared/types.js';
+
+// Lazy-loaded components for optimal bundle sizes and startup performance
+const CarbonCalculator = React.lazy(() => import('./components/CarbonCalculator.jsx').then(m => ({ default: m.CarbonCalculator })));
+const AICoach = React.lazy(() => import('./components/AICoach.jsx').then(m => ({ default: m.AICoach })));
+const CarbonTwin = React.lazy(() => import('./components/CarbonTwin.jsx').then(m => ({ default: m.CarbonTwin })));
+const ImpactSimulator = React.lazy(() => import('./components/ImpactSimulator.jsx').then(m => ({ default: m.ImpactSimulator })));
+const ProgressTracker = React.lazy(() => import('./components/ProgressTracker.jsx').then(m => ({ default: m.ProgressTracker })));
+const EcoChallenges = React.lazy(() => import('./components/EcoChallenges.jsx').then(m => ({ default: m.EcoChallenges })));
+const CommunityBenchmarking = React.lazy(() => import('./components/CommunityBenchmarking.jsx').then(m => ({ default: m.CommunityBenchmarking })));
+const ScenarioPlanner = React.lazy(() => import('./components/ScenarioPlanner.jsx').then(m => ({ default: m.ScenarioPlanner })));
+const AuditLogViewer = React.lazy(() => import('./components/AuditLogViewer.jsx').then(m => ({ default: m.AuditLogViewer })));
 
 interface ConfigResponse {
   ENABLE_AI: boolean;
@@ -113,7 +115,13 @@ export default function App() {
       config={config}
     >
       <ErrorBoundary>
-        {renderTabContent()}
+        <React.Suspense fallback={
+          <div className="py-20 text-center text-slate-500 font-mono text-xs animate-pulse">
+            Loading panel...
+          </div>
+        }>
+          {renderTabContent()}
+        </React.Suspense>
       </ErrorBoundary>
     </Layout>
   );
