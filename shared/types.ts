@@ -159,3 +159,54 @@ export interface SystemHealth {
     heapUsed: string;
   };
 }
+
+export interface SimulatedEmissions {
+  transport: number;
+  food: number;
+  energy: number;
+  lifestyle: number;
+  total: number;
+  score: number;
+}
+
+export interface SimulationResult {
+  baseline: SimulatedEmissions;
+  projected: SimulatedEmissions;
+  monthlyReduction: number;
+  annualReduction: number;
+}
+
+export interface LeaderboardEntry {
+  name: string;
+  score: number;
+  footprint: number;
+}
+
+export interface BenchmarkResult {
+  userFootprint: number;
+  personaAverage: number;
+  regionalAverage: number;
+  globalAverage: number;
+  comparisons: BenchmarkItem[];
+  communitySavings: number;
+  ranking: number;
+  totalUsers: number;
+  leaderboard: LeaderboardEntry[];
+}
+
+export interface RiskMetrics {
+  trendSlope: number;
+  adoptionRate: number;
+  challengeRate: number;
+}
+
+export interface HistoryResult {
+  history: CalculationResult[];
+  stats: UserStats;
+  risk: {
+    level: 'Low' | 'Medium' | 'High';
+    reason: string;
+    metrics: RiskMetrics;
+  };
+}
+

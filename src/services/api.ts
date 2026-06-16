@@ -8,7 +8,10 @@ import type {
   WeeklyReport,
   ScenarioPlan,
   AuditLog,
-  UserPersona
+  UserPersona,
+  SimulationResult,
+  HistoryResult,
+  BenchmarkResult
 } from '../../shared/types.js';
 
 async function fetchHelper<T>(url: string, options?: RequestInit): Promise<T> {
@@ -70,12 +73,7 @@ export const api = {
     reduceElectricityPct: number;
     newDietType: string;
     newShoppingHabits: string;
-  }): Promise<{
-    baseline: any;
-    projected: any;
-    monthlyReduction: number;
-    annualReduction: number;
-  }> {
+  }): Promise<SimulationResult> {
     return fetchHelper('/api/simulator/simulate', {
       method: 'POST',
       body: JSON.stringify(params)
@@ -83,15 +81,7 @@ export const api = {
   },
 
   // Progress Tracker & History
-  async getHistory(): Promise<{
-    history: CalculationResult[];
-    stats: UserStats;
-    risk: {
-      level: 'Low' | 'Medium' | 'High';
-      reason: string;
-      metrics: any;
-    };
-  }> {
+  async getHistory(): Promise<HistoryResult> {
     return fetchHelper('/api/tracker/history');
   },
 
@@ -101,17 +91,7 @@ export const api = {
   },
 
   // Benchmarking
-  async getBenchmark(): Promise<{
-    userFootprint: number;
-    personaAverage: number;
-    regionalAverage: number;
-    globalAverage: number;
-    comparisons: any[];
-    communitySavings: number;
-    ranking: number;
-    totalUsers: number;
-    leaderboard: any[];
-  }> {
+  async getBenchmark(): Promise<BenchmarkResult> {
     return fetchHelper('/api/benchmarking/compare');
   },
 
