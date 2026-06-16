@@ -1,11 +1,12 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Button } from '../src/components/UI/Button.jsx';
 import { Input } from '../src/components/UI/Input.jsx';
 import { Layout } from '../src/components/Layout.jsx';
 import { ImpactSimulator } from '../src/components/ImpactSimulator.jsx';
 import { ScenarioPlanner } from '../src/components/ScenarioPlanner.jsx';
+import { AuditLogViewer } from '../src/components/AuditLogViewer.jsx';
 import { api } from '../src/services/api.js';
 
 // Mock the API service
@@ -13,7 +14,8 @@ vi.mock('../src/services/api.js', () => ({
   api: {
     seedDemo: vi.fn(),
     simulate: vi.fn(),
-    generatePlan: vi.fn()
+    generatePlan: vi.fn(),
+    getAuditLogs: vi.fn()
   }
 }));
 
@@ -161,5 +163,23 @@ describe('Accessibility Standards DOM Checks', () => {
     // Keyboard activation of the form submit button
     fireEvent.click(generateBtn);
     expect(api.generatePlan).toHaveBeenCalledWith('reduction_10');
+  });
+
+  it('verifies focus and keyboard accessibility of reload button in AuditLogViewer', async () => {
+    vi.mocked(api.getAuditLogs).mockResolvedValue([]);
+
+    render(<AuditLogViewer />);
+
+    const refreshBtn = await screen.findByRole('button');
+    
+    // Focus progression
+    refreshBtn.focus();
+    expect(document.activeElement).toBe(refreshBtn);
+
+    // Keyboard activation
+    fireEvent.click(refreshBtn);
+    await waitFor(() => {
+      expect(api.getAuditLogs).toHaveBeenCalledTimes(2); // 1 initial load + 1 click reload
+    });
   });
 });
