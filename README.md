@@ -1,11 +1,11 @@
 # EcoTrack AI - Enterprise Climate-Tech Platform
 
-[![CI Pipeline](https://github.com/example/ecotrack-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/example/ecotrack-ai/actions)
+[![CI Pipeline](https://github.com/aqib85385-svg/ecotrack/actions/workflows/ci.yml/badge.svg)](https://github.com/aqib85385-svg/ecotrack/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict_Checked-blue.svg)](https://www.typescriptlang.org)
 [![Coverage](https://img.shields.io/badge/Coverage-44.92%25_Enforced-green.svg)](https://vitest.dev)
 [![Accessibility](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success.svg)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 
-EcoTrack AI is a production-grade, full-stack climate-tech SaaS platform designed to help users track, simulate, and reduce their carbon footprint through goal-based roadmaps, predictive digital carbon twins, automated AI weekly coaching reports, and real-world gamified eco-challenges.
+**Live Deployment URL**: [https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app](https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app)
 
 ---
 
@@ -148,21 +148,59 @@ Our Vitest test coverage focuses on the backend core logical units and shared co
 ---
 
 ## 14. Demo Instructions
-Evaluate the platform in under 2 minutes:
-1. Start the stack in development:
-   - Backend: `npm run server`
-   - Frontend: `npm run dev`
-2. Open `http://localhost:5173` in your browser.
-3. Use the **JUDGE PANEL** at the top. Click **Student**, **Professional**, **Family**, or **Eco-Conscious** to instantly seed the local database.
-4. Toggle between tabs (**AI Coach**, **Carbon Twin**, **Progress**, **Scenario Planner**) to inspect charts, forecasts, and schedules immediately.
+
+### Live Sandbox Demo (No Installation Required)
+For a frictionless 2-minute evaluation, navigate directly to the hosted container instance:
+- **Live Demo Link**: [https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app](https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app)
+
+---
+
+### Judge 3-Step Quick Start
+1. **Load Dashboard**: Open the live link or navigate to your local dev environment.
+2. **Instant Seed**: Locate the highlighted **JUDGE PANEL** banner at the very top of the viewport. Click one of the quick-seed profiles (e.g. **Student** or **Professional**) to instantly populate the underlying cache with 6 months of historical entries.
+3. **Inspect Projections**: Switch tabs (e.g. **AI Coach**, **Carbon Twin**, **Scenario Planner**) to instantly view regression slopes, gamification badge milestones, weekly reports, and roadmap schedules.
+
+---
+
+### Local Installation Instructions
+1. Clone the repository and navigate to the directory:
+   ```bash
+   npm install
+   ```
+2. Create a `.env` file in the root directory:
+   ```env
+   PORT=5000
+   NODE_ENV=development
+   GEMINI_API_KEY=your_actual_key_here
+   ENABLE_AI=true
+   ENABLE_BENCHMARKING=true
+   ENABLE_SCENARIO_PLANNER=true
+   ENABLE_GAMIFICATION=true
+   ENABLE_CARBON_TWIN=true
+   ```
+3. Run the development environment:
+   - Terminal 1 (Express backend server): `npm run server`
+   - Terminal 2 (Vite frontend client): `npm run dev`
+4. Open the local address: `http://localhost:5173`.
+
+---
+
+### Technical Design Notes
+
+#### 1. Why TypeScript Imports use `.js` Extensions (NodeNext Module Resolution)
+The full-stack codebase compiles and resolves modules using the modern `"moduleResolution": "NodeNext"` ES Module standard. Under this specification, TypeScript enforces that imports of local files retain `.js` extensions (e.g. `import { types } from './types.js'`) even though the source files reside as `.ts` on disk. This aligns with raw Node.js ES Modules standards and allows the compiled output to resolve imports natively without custom path loaders.
+
+#### 2. Automatic Cold-Start Demo Seeding
+To ensure judges do not land on a blank state upon cold startup, the backend server automatically runs a seeding check. If the local database query returned 0 Calculations, the system automatically runs the `seedDemoData('Student')` seeder, populating the dashboard with Student persona records by default.
 
 ---
 
 ## 15. Screenshots Section
 
 ### Seeding Demo Data
+*Interactive Judge Panel bar at the top of the viewport permits loading preset profiles immediately.*
 ![Judge Panel Seeding](/public/screenshot_seeding_example.png)
 
 ### Carbon Twin & Projections
+*Predictive digital twin charts render regression slopes and forecasting paths dynamically.*
 ![Carbon Twin View](/public/screenshot_twin_example.png)
-*(Replace placeholders with real captures upon staging deployment)*
