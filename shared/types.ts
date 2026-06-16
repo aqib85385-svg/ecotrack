@@ -210,3 +210,13 @@ export interface HistoryResult {
   };
 }
 
+export interface SystemConfig {
+  ENABLE_AI: boolean;
+  ENABLE_BENCHMARKING: boolean;
+  ENABLE_SCENARIO_PLANNER: boolean;
+  ENABLE_GAMIFICATION: boolean;
+  ENABLE_CARBON_TWIN: boolean;
+  GEMINI_STATUS: string;
+}
+
+

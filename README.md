@@ -9,6 +9,31 @@
 
 ---
 
+## 🚀 3-Minute Judge Tour
+
+This guide walks you through the key features of EcoTrack AI in just three minutes.
+
+1. **Step 1: Judge Demo Seeding**
+   - Scroll to the bottom of the sidebar navigation in the web UI to find the **Judge Control Panel**.
+   - Click one of the quick-seed profiles (**Student**, **Professional**, **Family Household**, or **Eco-Conscious User**).
+   - This instantly triggers database self-seeding, generating historical calculations, points, active streak data, and unlocked achievements.
+2. **Step 2: Carbon Twin Projections**
+   - Click on the **Carbon Twin** tab in the sidebar.
+   - Observe the 1-month, 6-month, and 12-month carbon twin forecasts.
+   - The projections show baseline, recommended, and fully-optimized pathways. 
+   - Note the dynamic confidence rating (High, Medium, or Low) and the mathematical rationale derived from historical data volatility.
+3. **Step 3: Scenario Planner Roadmaps**
+   - Navigate to the **Scenario Planner** tab.
+   - Select a target emissions reduction goal (e.g., **Reduce emissions by 25%**) or savings goal.
+   - Click **Generate Action Roadmap**.
+   - Observe the month-by-month roadmap milestones, probability scores, and cumulative savings forecasts.
+4. **Step 4: AI Coach Reports & Audit Logging**
+   - Go to the **AI Coach** tab to request a comprehensive sustainability report.
+   - Review the AI recommendations prioritized by annual CO₂ savings, difficulty, and financial ROI.
+   - Check the **Audit Logs** tab to view log entries tracking your actions (e.g. calculation completions, seeds) to verify complete enterprise traceability.
+
+---
+
 ## 1. Problem Statement
 The climate crisis demands immediate carbon footprint reductions, yet individuals struggle to adopt sustainable lifestyles due to:
 - **Ambiguity**: Difficulty calculating and tracking personal carbon output parameters.

@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from './components/Layout.jsx';
 import { ErrorBoundary } from './components/UI/ErrorBoundary.jsx';
 import { api } from './services/api.js';
-import type { UserStats, UserPersona } from '../shared/types.js';
+import type { UserStats, UserPersona, SystemConfig } from '../shared/types.js';
 
 // Lazy-loaded components for optimal bundle sizes and startup performance
 const CarbonCalculator = React.lazy(() => import('./components/CarbonCalculator.jsx').then(m => ({ default: m.CarbonCalculator })));
@@ -15,21 +15,12 @@ const CommunityBenchmarking = React.lazy(() => import('./components/CommunityBen
 const ScenarioPlanner = React.lazy(() => import('./components/ScenarioPlanner.jsx').then(m => ({ default: m.ScenarioPlanner })));
 const AuditLogViewer = React.lazy(() => import('./components/AuditLogViewer.jsx').then(m => ({ default: m.AuditLogViewer })));
 
-interface ConfigResponse {
-  ENABLE_AI: boolean;
-  ENABLE_BENCHMARKING: boolean;
-  ENABLE_SCENARIO_PLANNER: boolean;
-  ENABLE_GAMIFICATION: boolean;
-  ENABLE_CARBON_TWIN: boolean;
-  GEMINI_STATUS: string;
-}
-
 export default function App() {
   const [activeTab, setActiveTab] = React.useState('calculator');
   const [stats, setStats] = React.useState<UserStats | null>(null);
   const [riskLevel, setRiskLevel] = React.useState<'Low' | 'Medium' | 'High' | null>(null);
   const [persona, setPersona] = React.useState<UserPersona | null>(null);
-  const [config, setConfig] = React.useState<ConfigResponse | null>(null);
+  const [config, setConfig] = React.useState<SystemConfig | null>(null);
 
   const fetchConfig = React.useCallback(async () => {
     try {

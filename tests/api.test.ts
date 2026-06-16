@@ -199,6 +199,100 @@ describe('Express REST API Endpoints Integration', () => {
       expect(firstTime).toBeGreaterThanOrEqual(secondTime);
     }
   });
+
+  // Validator negative tests
+  it('POST /api/footprint/calculate returns 400 when required fields are missing', async () => {
+    const res = await request(app)
+      .post('/api/footprint/calculate')
+      .send({
+        persona: 'Student'
+      });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toContain('Missing required inputs');
+  });
+
+  it('POST /api/footprint/calculate returns 400 for invalid dailyDistance value', async () => {
+    const res = await request(app)
+      .post('/api/footprint/calculate')
+      .send({
+        persona: 'Student',
+        transportMethod: 'public_transit',
+        dailyDistance: 15000,
+        dietType: 'vegan',
+        electricityUsage: 120,
+        electricityType: 'green',
+        shoppingHabits: 'low'
+      });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toContain('dailyDistance must be a number between 0 and 10,000');
+  });
+
+  it('POST /api/footprint/calculate returns 400 for negative electricityUsage value', async () => {
+    const res = await request(app)
+      .post('/api/footprint/calculate')
+      .send({
+        persona: 'Student',
+        transportMethod: 'public_transit',
+        dailyDistance: 10,
+        dietType: 'vegan',
+        electricityUsage: -10,
+        electricityType: 'green',
+        shoppingHabits: 'low'
+      });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toContain('electricityUsage must be a number');
+  });
+
+  it('POST /api/footprint/calculate returns 400 for invalid dietType option', async () => {
+    const res = await request(app)
+      .post('/api/footprint/calculate')
+      .send({
+        persona: 'Student',
+        transportMethod: 'public_transit',
+        dailyDistance: 10,
+        dietType: 'carnivore_heavy',
+        electricityUsage: 120,
+        electricityType: 'green',
+        shoppingHabits: 'low'
+      });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toContain('Invalid dietType');
+  });
+
+  it('POST /api/simulator/simulate returns 400 for invalid electricity reduction percentage', async () => {
+    const res = await request(app)
+      .post('/api/simulator/simulate')
+      .send({
+        reduceElectricityPct: 150
+      });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toContain('reduceElectricityPct must be a number between 0 and 100');
+  });
+
+  it('POST /api/simulator/simulate returns 400 when switchTransit is not a boolean', async () => {
+    const res = await request(app)
+      .post('/api/simulator/simulate')
+      .send({
+        switchTransit: 'yes'
+      });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toContain('switchTransit must be a boolean');
+  });
+
+  it('POST /api/challenges/invalid_id_underscore/complete returns 400 for invalid alphanumeric ID param format', async () => {
+    const res = await request(app).post('/api/challenges/invalid_id_underscore/complete');
+    expect(res.status).toBe(400);
+    expect(res.body.error).toContain('Invalid challenge ID parameter format');
+  });
+
+  it('returns 400 when sending malformed JSON payload', async () => {
+    const res = await request(app)
+      .post('/api/footprint/calculate')
+      .set('Content-Type', 'application/json')
+      .send('{invalid json');
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBeDefined();
+  });
 });
 
 

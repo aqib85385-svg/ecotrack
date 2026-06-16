@@ -14,7 +14,7 @@ import {
   Zap 
 } from 'lucide-react';
 import { api } from '../services/api.js';
-import type { UserStats, UserPersona } from '../../shared/types.js';
+import type { UserStats, UserPersona, SystemConfig } from '../../shared/types.js';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ interface LayoutProps {
   riskLevel: 'Low' | 'Medium' | 'High' | null;
   persona: UserPersona | null;
   onRefresh: () => void;
-  config: any;
+  config: SystemConfig | null;
 }
 
 export function Layout({ 

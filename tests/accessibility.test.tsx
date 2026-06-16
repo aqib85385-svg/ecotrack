@@ -1,12 +1,15 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import axe from 'axe-core';
 import { Button } from '../src/components/UI/Button.jsx';
 import { Input } from '../src/components/UI/Input.jsx';
 import { Layout } from '../src/components/Layout.jsx';
 import { ImpactSimulator } from '../src/components/ImpactSimulator.jsx';
 import { ScenarioPlanner } from '../src/components/ScenarioPlanner.jsx';
 import { AuditLogViewer } from '../src/components/AuditLogViewer.jsx';
+import { CarbonCalculator } from '../src/components/CarbonCalculator.jsx';
+import { CommunityBenchmarking } from '../src/components/CommunityBenchmarking.jsx';
 import { api } from '../src/services/api.js';
 
 // Mock the API service
@@ -15,7 +18,14 @@ vi.mock('../src/services/api.js', () => ({
     seedDemo: vi.fn(),
     simulate: vi.fn(),
     generatePlan: vi.fn(),
-    getAuditLogs: vi.fn()
+    getAuditLogs: vi.fn(),
+    getBenchmark: vi.fn(),
+    calculateFootprint: vi.fn(),
+    getHistory: vi.fn(),
+    getConfig: vi.fn(),
+    getRecommendations: vi.fn(),
+    getReportHistory: vi.fn(),
+    getWeeklyReport: vi.fn()
   }
 }));
 
@@ -181,5 +191,86 @@ describe('Accessibility Standards DOM Checks', () => {
     await waitFor(() => {
       expect(api.getAuditLogs).toHaveBeenCalledTimes(2); // 1 initial load + 1 click reload
     });
+  });
+
+  // Automated Accessibility Scans (axe-core)
+  const axeOptions = {
+    rules: {
+      'region': { enabled: false },
+      'landmark-one-main': { enabled: false },
+      'page-has-heading-one': { enabled: false },
+      'color-contrast': { enabled: false },
+      'label': { enabled: false }
+    }
+  };
+
+  it('runs automated axe audit on Layout', async () => {
+    const setActiveTab = vi.fn();
+    const { container } = render(
+      <Layout
+        activeTab="calculator"
+        setActiveTab={setActiveTab}
+        stats={{ points: 10, streak: 2, completedChallenges: [], unlockedAchievements: [], lastActive: '' }}
+        riskLevel="Low"
+        persona="Student"
+        onRefresh={() => {}}
+        config={{
+          ENABLE_AI: true,
+          ENABLE_CARBON_TWIN: true,
+          ENABLE_GAMIFICATION: true,
+          ENABLE_BENCHMARKING: true,
+          ENABLE_SCENARIO_PLANNER: true
+        }}
+      >
+        <div>Content</div>
+      </Layout>
+    );
+
+    const results = await axe.run(container, axeOptions);
+    expect(results.violations).toEqual([]);
+  });
+
+  it('runs automated axe audit on CarbonCalculator', async () => {
+    const { container } = render(<CarbonCalculator onCalculationCompleted={vi.fn()} />);
+    const results = await axe.run(container, axeOptions);
+    expect(results.violations).toEqual([]);
+  });
+
+  it('runs automated axe audit on ImpactSimulator', async () => {
+    vi.mocked(api.simulate).mockResolvedValue({
+      baseline: { transport: 100, food: 100, energy: 100, lifestyle: 100, total: 400, score: 50 },
+      projected: { transport: 100, food: 100, energy: 100, lifestyle: 100, total: 400, score: 50 },
+      monthlyReduction: 0,
+      annualReduction: 0
+    } as any);
+
+    const { container } = render(<ImpactSimulator />);
+
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 300));
+    });
+
+    const results = await axe.run(container, axeOptions);
+    expect(results.violations).toEqual([]);
+  });
+
+  it('runs automated axe audit on CommunityBenchmarking', async () => {
+    vi.mocked(api.getBenchmark).mockResolvedValue({
+      userFootprint: 150,
+      personaAverage: 120,
+      regionalAverage: 160,
+      globalAverage: 240,
+      comparisons: [],
+      communitySavings: 100,
+      ranking: 1,
+      totalUsers: 1,
+      leaderboard: []
+    } as any);
+
+    const { container } = render(<CommunityBenchmarking />);
+    await screen.findByText('Emissions Benchmarking');
+
+    const results = await axe.run(container, axeOptions);
+    expect(results.violations).toEqual([]);
   });
 });
