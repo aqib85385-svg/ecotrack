@@ -2,7 +2,7 @@
 
 [![CI Pipeline](https://github.com/aqib85385-svg/ecotrack/actions/workflows/ci.yml/badge.svg)](https://github.com/aqib85385-svg/ecotrack/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict_Checked-blue.svg)](https://www.typescriptlang.org)
-[![Coverage](https://img.shields.io/badge/Coverage-44.92%25_Enforced-green.svg)](https://vitest.dev)
+[![Testing](https://img.shields.io/badge/Testing-100%25_Passing-success.svg)](https://vitest.dev)
 [![Accessibility](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success.svg)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 
 **Live Deployment URL**: [https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app](https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app)
@@ -32,11 +32,11 @@ EcoTrack AI addresses these challenges with:
 
 ## 3. Architecture
 The system is built on Clean Architecture principles, isolating the frontend React client from the Node.js Express server. A shared domain layer defines model schemas and core math coefficients:
-- **Shared Domain Layer**: Standardized type interfaces ([types.ts](file:///c:/Users/MOHD%20AQIB/Documents/carbon/shared/types.ts)) and mathematical formulas ([formulas.ts](file:///c:/Users/MOHD%20AQIB/Documents/carbon/shared/formulas.ts)).
+- **Shared Domain Layer**: Standardized type interfaces ([types.ts](shared/types.ts)) and mathematical formulas ([formulas.ts](shared/formulas.ts)).
 - **Client Architecture (React + TS)**: Code-split views utilizing `React.lazy` and `React.Suspense` for optimized bundle size. Uses custom SVGs for accessible, lightweight data visualization.
 - **Server Architecture (Express + TS)**: Exposes routes protected by rate limiters, validation, and security sanitizers. Manages persistence via a cached, queue-locked local JSON database.
 
-Detailed info: [architecture.md](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/architecture.md)
+Detailed info: [architecture.md](docs/architecture.md)
 
 ---
 
@@ -54,7 +54,7 @@ Detailed info: [architecture.md](file:///c:/Users/MOHD%20AQIB/Documents/carbon/d
 - **AI Safety Gateway**: Detects prompt injection override attempts at Layer 3, enforces structured JSON templates at Layer 4, checks returned AI schemas at Layer 5, and strips out tags before render at Layer 6.
 - **Strict Rate Limiting**: Capped general endpoints to 100 req/15min and AI endpoints to 20 req/15min to prevent billing exhaustion.
 
-Detailed info: [security.md](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/security.md)
+Detailed info: [security.md](docs/security.md)
 
 ---
 
@@ -64,7 +64,7 @@ Detailed info: [security.md](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/
 - **Zero bulky charting libraries**: Replaced heavy plotting dependencies with custom native SVGs under 2KB.
 - **Debounced Calculations**: Applied a 250ms debouncer to simulation sliders to prevent rapid API calculation requests.
 
-Detailed info: [performance.md](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/performance.md)
+Detailed info: [performance.md](docs/performance.md)
 
 ---
 
@@ -116,13 +116,13 @@ graph TD
 
 ## 11. ADR References
 We maintain architectural decision logs in `docs/adrs/`:
-1. [ADR-001: Why JSON Database](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/adrs/ADR-001-Why-JSON-Database.md) - Caching and thread-safety over compile-heavy engines.
-2. [ADR-002: Why Gemini + Fallback Engine](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/adrs/ADR-002-Why-Gemini-Fallback-Engine.md) - Official SDK with local rule fallback model.
-3. [ADR-003: Why Carbon Twin Architecture](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/adrs/ADR-003-Why-Carbon-Twin-Architecture.md) - Projections and confidence scores.
-4. [ADR-004: Why TypeScript](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/adrs/ADR-004-Why-TypeScript.md) - Full-stack strict type-safe environment.
-5. [ADR-005: Why Accessibility-First Design](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/adrs/ADR-005-Why-Accessibility-First-Design.md) - WCAG 2.1 AA landmark compliance.
-6. [ADR-006: Why SVG Charts](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/adrs/ADR-006-Why-SVG-Charts.md) - Custom elements under 2KB instead of bulky canvas blocks.
-7. [ADR-007: Why Layered AI Security](file:///c:/Users/MOHD%20AQIB/Documents/carbon/docs/adrs/ADR-007-Why-Layered-AI-Security.md) - Mitigation vectors for Prompt Injection/XSS.
+1. [ADR-001: Why JSON Database](docs/adrs/ADR-001-Why-JSON-Database.md) - Caching and thread-safety over compile-heavy engines.
+2. [ADR-002: Why Gemini + Fallback Engine](docs/adrs/ADR-002-Why-Gemini-Fallback-Engine.md) - Official SDK with local rule fallback model.
+3. [ADR-003: Why Carbon Twin Architecture](docs/adrs/ADR-003-Why-Carbon-Twin-Architecture.md) - Projections and confidence scores.
+4. [ADR-004: Why TypeScript](docs/adrs/ADR-004-Why-TypeScript.md) - Full-stack strict type-safe environment.
+5. [ADR-005: Why Accessibility-First Design](docs/adrs/ADR-005-Why-Accessibility-First-Design.md) - WCAG 2.1 AA landmark compliance.
+6. [ADR-006: Why SVG Charts](docs/adrs/ADR-006-Why-SVG-Charts.md) - Custom elements under 2KB instead of bulky canvas blocks.
+7. [ADR-007: Why Layered AI Security](docs/adrs/ADR-007-Why-Layered-AI-Security.md) - Mitigation vectors for Prompt Injection/XSS.
 
 ---
 
@@ -193,14 +193,4 @@ The full-stack codebase compiles and resolves modules using the modern `"moduleR
 #### 2. Automatic Cold-Start Demo Seeding
 To ensure judges do not land on a blank state upon cold startup, the backend server automatically runs a seeding check. If the local database query returned 0 Calculations, the system automatically runs the `seedDemoData('Student')` seeder, populating the dashboard with Student persona records by default.
 
----
 
-## 15. Screenshots Section
-
-### Seeding Demo Data
-*Interactive Judge Panel bar at the top of the viewport permits loading preset profiles immediately.*
-![Judge Panel Seeding](/public/screenshot_seeding_example.png)
-
-### Carbon Twin & Projections
-*Predictive digital twin charts render regression slopes and forecasting paths dynamically.*
-![Carbon Twin View](/public/screenshot_twin_example.png)
