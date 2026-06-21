@@ -5,7 +5,7 @@
 [![Testing](https://img.shields.io/badge/Testing-100%25_Passing-success.svg)](https://vitest.dev)
 [![Accessibility](https://img.shields.io/badge/Accessibility-WCAG_2.1_AA-success.svg)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 
-**Live Deployment URL**: [https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app](https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app)
+**Live Deployment URL**: [[https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app](https://ecotrack-ai-aqib85385-svg-ecotrack.a.run.app)](https://ecotrack-ai-1049650741841.us-central1.run.app/)
 
 ---
 
